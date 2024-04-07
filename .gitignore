@@ -3,3 +3,6 @@
 .venv
 env/
 venv/
+
+# Mac
+.DS_Store
