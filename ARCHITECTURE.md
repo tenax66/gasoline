@@ -1,5 +1,7 @@
 # ARCHITECTURE
 
+![Architecture diagram of gasoline](/assets/images/ARCHITECTURE.png)
+
 # BM25
 
 The BM25 score of a document D for a given query Q is:
