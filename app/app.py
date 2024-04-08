@@ -1,4 +1,6 @@
 import argparse
+import os
+from dotenv import load_dotenv
 from fastapi import FastAPI, Path, Request
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
@@ -56,8 +58,14 @@ def parse_args():
 
 
 if __name__ == "__main__":
+    load_dotenv()
+
     args = parse_args()
     data = pd.read_parquet(args.data_path)
     content = list(zip(data["URL"].values, data["content"].values))
     engine.bulk_index(content)
-    run(app, host="127.0.0.1", port=8000)
+
+    host = os.getenv("HOST", "127.0.0.1")
+    port = int(os.getenv("PORT", 8000))
+
+    run(app, host=host, port=port)
