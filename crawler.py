@@ -63,7 +63,7 @@ async def main(feed_file):
         results = await asyncio.gather(*tasks)
 
     flattened_results = [item for sublist in results for item in sublist]
-    df = pd.DataFram234we(flattened_results, columns=["URL", "content"])
+    df = pd.DataFrame(flattened_results, columns=["URL", "content"])
     df.to_parquet("output.parquet", index=False)
 
 
