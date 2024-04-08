@@ -1,5 +1,15 @@
 from collections import defaultdict
+from math import log
 import string
+
+
+def update_url_scores(existing: dict[str, float], new: dict[str, float]):
+    for url, score in new.items():
+        if url in existing:
+            existing[url] += score
+        else:
+            existing[url] = score
+    return existing
 
 
 def normalize_string(input_string: str) -> str:
@@ -20,7 +30,7 @@ def normalize_string(input_string: str) -> str:
 
 
 class SearchEngine:
-    def __init__(self):
+    def __init__(self, k1: float = 1.5, b: float = 0.75):
         self._index: dict[str, dict[str, int]] = defaultdict(lambda: defaultdict(int))
         """
         A mapping that, given a word: str, returns another mapping from URL: str
@@ -28,6 +38,67 @@ class SearchEngine:
         """
 
         self._documents: dict[str, str] = {}
+
+        self.k1 = k1
+        """the free parameter of BM25"""
+        self.b = b
+        """the free parameter of BM25"""
+
+    @property
+    def posts(self) -> list[str]:
+        return list(self._documents.keys())
+
+    @property
+    def number_of_documents(self) -> int:
+        return len(self._documents)
+
+    @property
+    def avgdl(self) -> float:
+        return sum(len(d) for d in self._documents.values()) / len(self._documents)
+
+    def search(self, query: str) -> dict[str, float]:
+        keywords = normalize_string(query).split(" ")
+        url_scores: dict[str, float] = {}
+        for kw in keywords:
+            kw_urls_score = self.bm25(kw)
+            url_scores = update_url_scores(url_scores, kw_urls_score)
+        return url_scores
+
+    def idf(self, keyword: str) -> float:
+        """Computes inverse document frequency for a given keyword.
+
+        Parameters
+        ----------
+        kw: str
+            keyword for IDF.
+        """
+        N = self.number_of_documents
+        n_kw = len(self.get_urls(keyword))
+        return log((N - n_kw + 0.5) / (n_kw + 0.5) + 1)
+
+    def bm25(self, kw: str) -> dict[str, float]:
+        """For all the indexed documents, returns the BM25 score for the keyword.
+
+        Parameters
+        ----------
+        kw: str
+            keyword for calculating the bm25 score.
+
+        Returns
+        -------
+        dict[str, float]
+            mapping from all the URLs that contain the keyword given to their score.
+        """
+        result = {}
+        idf_score = self.idf(kw)
+        avgdl = self.avgdl
+        for url, freq in self.get_urls(kw).items():
+            numerator = freq * (self.k1 + 1)
+            denominator = freq + self.k1 * (
+                1 - self.b + self.b * len(self._documents[url]) / avgdl
+            )
+            result[url] = idf_score * numerator / denominator
+        return result
 
     def index(self, url: str, content: str) -> None:
         """Add an URL and its content to the index.
@@ -56,3 +127,6 @@ class SearchEngine:
         """
         keyword = normalize_string(keyword)
         return self._index[keyword]
+
+
+engine = SearchEngine()
