@@ -9,3 +9,6 @@ venv/
 
 #python
 __pycache__
+
+# gasoline
+*.parquet
