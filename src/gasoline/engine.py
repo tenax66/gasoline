@@ -12,6 +12,7 @@ def update_url_scores(existing: dict[str, float], new: dict[str, float]):
     return existing
 
 
+# TODO: simplify this
 def normalize_string(input_string: str) -> str:
     """Normalizes input string. (e.g. remove punctuation, everything to lowercase, etc.)
 
