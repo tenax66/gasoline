@@ -1,5 +1,6 @@
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider, Rule
+import string
 
 
 class GasolineSpiderSpider(CrawlSpider):
@@ -12,5 +13,25 @@ class GasolineSpiderSpider(CrawlSpider):
     def parse_item(self, response):
         item = {}
         item["title"] = response.xpath("//title/text()").get()
-        item["body"] = response.xpath("//body").extract()
+
+        # extract body text without html tags
+        item["body"] = " ".join(
+            list(
+                filter(
+                    # TODO: normalize text
+                    lambda x: x != "",
+                    map(
+                        self._normalize,
+                        response.xpath("//body//p//text()").getall(),
+                    ),
+                )
+            )
+        )
         return item
+
+    def _normalize(self, input: str) -> str:
+        translation_table = str.maketrans(
+            string.punctuation, " " * len(string.punctuation)
+        )
+
+        return input.replace("\n", " ").strip().translate(translation_table)
