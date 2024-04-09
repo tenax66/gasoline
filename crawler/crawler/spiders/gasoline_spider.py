@@ -15,7 +15,7 @@ class GasolineSpiderSpider(CrawlSpider):
         item["url"] = response.url
 
         # extract body text without html tags
-        item["body"] = " ".join(
+        item["content"] = " ".join(
             list(
                 filter(
                     # TODO: normalize text

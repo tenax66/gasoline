@@ -9,6 +9,6 @@ import scrapy
 class CrawlerItem(scrapy.Item):
     # define the fields for your item here like:
     url = scrapy.Field()
-    body = scrapy.Field()
+    content = scrapy.Field()
 
     pass
