@@ -12,7 +12,7 @@ class GasolineSpiderSpider(CrawlSpider):
 
     def parse_item(self, response):
         item = {}
-        item["title"] = response.xpath("//title/text()").get()
+        item["url"] = response.url
 
         # extract body text without html tags
         item["body"] = " ".join(
