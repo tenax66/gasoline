@@ -4,6 +4,27 @@ https://www.technologyreview.jp/s/325142/recapturing-early-internet-whimsy-with-
 
 [Small Website Discoverability Crisis](https://www.marginalia.nu/log/19-website-discoverability-crisis/)
 
+# Get Started
+
+```bash
+#install
+pip install --no-cache-dir --upgrade -r requirements.txt
+pip install .
+
+# create .parquet file
+scrapy crawl gasoline_spider
+
+# run
+python -m app.app --data-path crawler/output.parquet
+```
+
+## Docker
+
+```bash
+docker build --tag gasoline:latest .
+docker compose up
+```
+
 # Copyright
 
 This software is based on [microsearch](https://github.com/alexmolas/microsearch).
