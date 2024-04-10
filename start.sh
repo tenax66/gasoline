@@ -16,6 +16,8 @@ while ! nc -z localhost 9050; do
 done
 echo "Tor started successfully."
 
+sleep 60
+
 # Start scrapy
 echo "Starting Scrapy..."
 
