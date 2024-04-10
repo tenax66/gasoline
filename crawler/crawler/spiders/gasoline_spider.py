@@ -10,7 +10,7 @@ class GasolineSpiderSpider(CrawlSpider):
         "http://paavlaytlfsqyvkg3yqj7hflfg5jw2jdg2fgkza5ruf6lplwseeqtvyd.onion/"
     ]
 
-    rules = (Rule(LinkExtractor(allow=r".*"), callback="parse_item", follow=True),)
+    rules = (Rule(LinkExtractor(allow=r".*"), callback="parse_item", follow=False),)
 
     def parse_item(self, response):
         item = {}
