@@ -25,6 +25,12 @@ docker build --tag gasoline:latest .
 docker compose up
 ```
 
+# Proxy Settings
+
+```bash
+pproxy -l http://:8118 -r socks5://127.0.0.1:9050 -vv
+```
+
 # Copyright
 
 This software is based on [microsearch](https://github.com/alexmolas/microsearch).

@@ -60,7 +60,7 @@ class CrawlerDownloaderMiddleware:
 
     def __init__(self):
         # pproxy
-        self.proxy = "http://127.0.0.1:8181"
+        self.proxy = "http://127.0.0.1:8118"
 
     @classmethod
     def from_crawler(cls, crawler):
