@@ -7,9 +7,8 @@ class GasolineSpiderSpider(CrawlSpider):
     name = "gasoline_spider"
     allowed_domains = []
     start_urls = [
-        "https://example.com"
-        # the hidden wiki
-        "http://paavlaytlfsqyvkg3yqj7hflfg5jw2jdg2fgkza5ruf6lplwseeqtvyd.onion/"
+        "https://example.com",
+        "http://paavlaytlfsqyvkg3yqj7hflfg5jw2jdg2fgkza5ruf6lplwseeqtvyd.onion/",
     ]
 
     rules = (Rule(LinkExtractor(allow=r".*"), callback="parse_item", follow=False),)
