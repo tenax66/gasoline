@@ -58,6 +58,10 @@ class CrawlerDownloaderMiddleware:
     # scrapy acts as if the downloader middleware does not modify the
     # passed objects.
 
+    def __init__(self):
+        # pproxy
+        self.proxy = "http://127.0.0.1:8118"
+
     @classmethod
     def from_crawler(cls, crawler):
         # This method is used by Scrapy to create your spiders.
@@ -66,16 +70,11 @@ class CrawlerDownloaderMiddleware:
         return s
 
     def process_request(self, request, spider):
-        # Called for each request that goes through the downloader
-        # middleware.
+        if "proxy" not in request.meta:
+            request.meta["proxy"] = self.proxy
 
-        # Must either:
-        # - return None: continue processing this request
-        # - or return a Response object
-        # - or return a Request object
-        # - or raise IgnoreRequest: process_exception() methods of
-        #   installed downloader middleware will be called
-        return None
+    def get_proxy(self):
+        return self.proxy
 
     def process_response(self, request, response, spider):
         # Called with the response returned from the downloader.
