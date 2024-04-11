@@ -29,6 +29,16 @@ def get_top_urls(scores_dict: dict, n: int):
     return top_n_dict
 
 
+# Only for keep aliving
+# TODO: return proper headers
+@app.head("/")
+async def head_root():
+    headers = {
+        "Content-Type": "text/plain",
+    }
+    return headers
+
+
 @app.get("/", response_class=HTMLResponse)
 async def search(request: Request):
     posts = engine.posts
