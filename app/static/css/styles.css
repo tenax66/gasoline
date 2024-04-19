@@ -74,3 +74,38 @@ details[open] {
     margin: 0 -1rem 1rem;
     padding: 0 1rem
 }
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  th,
+  td {
+    padding: 1rem 2rem;
+    text-align: center;
+    border-bottom: 1px solid #96968c;
+  }
+  th {
+    color: #ffffff;
+    background: #a100ff;
+    position: sticky;
+    top: 0;
+  }
+  @media(max-width: 500px) {
+    .heading {
+      display: none;
+    }
+    td {
+      display: block;
+    }
+    td::before {
+      content: attr(data-label);
+      color: #666;
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+  }
+
+tbody > tr > th {
+    background: #be82ff;
+}

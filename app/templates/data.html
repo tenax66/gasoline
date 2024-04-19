@@ -3,5 +3,10 @@
 {% block heading %} Data {% endblock %}
 
 {% block content %}
-{{ html_content | safe }}
+
+<body>
+    {{ html_content | safe }}
+</body>
+
+</html>
 {% endblock %}
