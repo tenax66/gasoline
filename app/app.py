@@ -17,6 +17,7 @@ static_path = script_dir / "static"
 
 
 app = FastAPI()
+data = pd.DataFrame()
 engine = SearchEngine()
 templates = Jinja2Templates(directory=str(templates_path))
 app.mount("/static", StaticFiles(directory=str(static_path)), name="static")
@@ -65,6 +66,13 @@ def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--data-path")
     return parser.parse_args()
+
+
+@app.get("/data")
+def show_data(request: Request):
+    return templates.TemplateResponse(
+        "data.html", {"request": request, "html_content": data.to_html()}
+    )
 
 
 if __name__ == "__main__":
