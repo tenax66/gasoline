@@ -5,7 +5,11 @@
 {% block content %}
 
 <body>
-    {{ html_content | safe }}
+    <div class="table-responsive">
+        <div class="table table-striped table-light table-bordered table-hover">
+            {{ html_content | safe }}
+        </div>
+    </div>
 </body>
 
 </html>
