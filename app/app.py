@@ -89,8 +89,9 @@ if __name__ == "__main__":
 
     args = parse_args()
     data = pd.read_parquet(args.data_path)
-    content = list(zip(data["url"].values, data["content"].values))
-    engine.bulk_index(content)
+
+    documents = list(zip(data["url"].values, data["content"].values))
+    engine.bulk_index(documents)
 
     host = os.getenv("HOST", "127.0.0.1")
     port = int(os.getenv("PORT", 8000))
