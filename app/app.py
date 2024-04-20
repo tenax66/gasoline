@@ -71,7 +71,16 @@ def parse_args():
 @app.get("/data")
 def show_data(request: Request):
     return templates.TemplateResponse(
-        "data.html", {"request": request, "html_content": data.to_html()}
+        "data.html",
+        {
+            "request": request,
+            "html_content": data.to_html(
+                justify="center",
+                render_links=True,
+                col_space=50,
+                classes=["table", "table-borderd"],
+            ),
+        },
     )
 
 
