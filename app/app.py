@@ -75,6 +75,7 @@ def show_data(request: Request):
         {
             "request": request,
             "html_content": data.to_html(
+                columns=["url", "title"],
                 justify="center",
                 render_links=True,
                 col_space=50,

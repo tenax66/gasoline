@@ -14,12 +14,12 @@ class CrawlerPipeline:
         self.items = []
 
     def process_item(self, item, spider):
-        self.items.append((item["url"], item["content"]))
+        self.items.append((item["url"], item["title"], item["content"]))
         return item
 
     def close_spider(self, spider):
         print(self.items)
-        df = pd.DataFrame(self.items, columns=["url", "content"])
+        df = pd.DataFrame(self.items, columns=["url", "title", "content"])
         df.to_parquet("output.parquet", index=False)
 
         # DataFrameを.parquetファイルに書き込む

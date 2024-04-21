@@ -17,6 +17,8 @@ class GasolineSpiderSpider(CrawlSpider):
         item = {}
         item["url"] = response.url
 
+        item["title"] = response.xpath("//title/text()").get()
+
         # extract body text without html tags
         item["content"] = " ".join(
             list(
